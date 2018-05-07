@@ -1,0 +1,43 @@
+{
+  "name": "centrum",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gizo-network/centrum.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gizo-network/centrum/issues"
+  },
+  "homepage": "https://github.com/gizo-network/centrum#readme",
+  "dependencies": {
+    "agenda": "^1.0.3",
+    "apidoc": "^0.17.6",
+    "axios": "^0.18.0",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "build-url": "^1.1.1",
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
+    "eccrypto": "^1.0.3",
+    "express": "^4.16.3",
+    "express-rate-limit": "^2.11.0",
+    "helmet": "^3.12.0",
+    "ip": "^1.1.5",
+    "jsonwebtoken": "^8.2.1",
+    "mongoose": "^5.0.17",
+    "underscore": "^1.9.0"
+  },
+  "devDependencies": {
+    "morgan": "^1.9.0",
+    "nodemon": "^1.17.3"
+  }
+}
