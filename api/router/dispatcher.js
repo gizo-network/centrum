@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
+const IP = require('ip')
 const router = require('express').Router()
 const Dispatcher = require('../models/dispatcher')
 const Middlewares = require('../../helpers/middlewares')
@@ -58,11 +59,13 @@ router.get("/v1/dispatchers", Middlewares.limitGetDispatchers, async (req, res) 
     }
 })
 
-router.post("/v1/dispatcher", Middlewares.limitCreateDispatcher, async (req, res) => {
+router.post("/v1/dispatcher", Middlewares.agent, Middlewares.limitCreateDispatcher, async (req, res) => {
     try {
-        const {pub, port} = req.body;
-        if(pub && port){
-            let ip = req.ip 
+        const {pub, port, ip} = req.body;
+        if(pub && port && ip ){
+            if (IP.isPrivate(ip)) {
+                return res.status(400).json({status: "Public IP required"})
+            }
             token = await Dispatcher.create({pub, ip, port})
             return res.json({token})
         }
@@ -116,19 +119,6 @@ router.patch("/v1/dispatcher/wake", Middlewares.auth, async (req, res) => {
 router.patch("/v1/dispatcher/sleep", Middlewares.auth, async (req, res) => {
     try {
         await Dispatcher.sleep(req.dispatcher)
-        res.json({
-            status: "success"
-        })
-    } catch (error) {
-        res.status(500).json({
-            status: error.message
-        })
-    }
-})
-
-router.delete("/v1/dispatcher", Middlewares.auth, async (req, res) => {
-    try {
-        await Dispatcher.remove(req.dispatcher)
         res.json({
             status: "success"
         })

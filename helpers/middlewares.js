@@ -1,7 +1,22 @@
 const RateLimit = require('express-rate-limit')
+const jwt = require('jsonwebtoken')
 
 const Middlewares = {
-    auth(){
+    agent(req, res, next){
+        try {
+            if(req.headers["user-agent"] !== "Gizo Node"){
+                return res.status(400).send({
+                    status: "Only gizo nodes allowed"
+                })
+            }
+            return next()
+        } catch (error) {
+            res.status(500).send({
+                status: error.message
+            })
+        }
+    },
+    auth(req, res, next){
         try {
             const token = req.headers['x-gizo-token']
             if(!token){

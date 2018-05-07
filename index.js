@@ -3,7 +3,6 @@ const {NODE_ENV, PORT, DB, DB_DEV} = process.env;
 const app = require('express')();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const morgan = require('morgan');
 const helmet = require('helmet');
 const db = NODE_ENV == "dev" ? DB_DEV : DB;
 const mongoose = require("mongoose").connect(db, {
@@ -18,7 +17,7 @@ app.use(helmet());
 app.use(cors());
 
 if (NODE_ENV === "dev"){
-    app.use(morgan("short"));
+    app.use(require("morgan")("short"));
 }
 
 app.use(require("./api/router/dispatcher"))

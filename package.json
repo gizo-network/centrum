@@ -25,6 +25,7 @@
     "build-url": "^1.1.1",
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",
+    "eccrypto": "^1.0.3",
     "express": "^4.16.3",
     "express-rate-limit": "^2.11.0",
     "helmet": "^3.12.0",
