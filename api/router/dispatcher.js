@@ -4,6 +4,7 @@ const IP = require('ip')
 const router = require('express').Router()
 const Dispatcher = require('../models/dispatcher')
 const Middlewares = require('../../helpers/middlewares')
+const agenda = require('../../helpers/agenda')
 
 router.get("/v1/count/all", async (req, res) => {
     try {
@@ -62,11 +63,12 @@ router.get("/v1/dispatchers", Middlewares.limitGetDispatchers, async (req, res) 
 router.post("/v1/dispatcher", Middlewares.agent, Middlewares.limitCreateDispatcher, async (req, res) => {
     try {
         const {pub, port, ip} = req.body;
-        if(pub && port && ip ){
+        if(pub && port && ip){
             if (IP.isPrivate(ip)) {
                 return res.status(400).json({status: "Public IP required"})
             }
             token = await Dispatcher.create({pub, ip, port})
+            agenda.now("verify node", {pub})
             return res.json({token})
         }
         return res.status(400).json({ status: "Incomplete Request" });

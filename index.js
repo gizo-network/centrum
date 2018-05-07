@@ -4,12 +4,13 @@ const app = require('express')();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
-const db = NODE_ENV == "dev" ? DB_DEV : DB;
+const agenda = require('./helpers/agenda');
+const tasks = require('./helpers/tasks')
+const port = PORT || 5000;
+const db = require('./helpers/db')
 const mongoose = require("mongoose").connect(db, {
     promiseLibrary: require("bluebird")
-  });
-const port = PORT || 5000;
-
+});
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -20,16 +21,21 @@ if (NODE_ENV === "dev"){
     app.use(require("morgan")("short"));
 }
 
-app.use(require("./api/router/dispatcher"))
+app.use(require("./api/router/dispatcher"));
 
 app.get("/v1", (req, res) => {
     res.send({
         status: "running"
-    })
+    });
 })
 
-app.listen(port, () => {
-    if (NODE_ENV === "dev"){
-        console.log(`Server running on port ${port}`)
-    }
+tasks()
+
+agenda.on("ready", () => {
+    agenda.start();
+    app.listen(port, () => {
+        if (NODE_ENV === "dev"){
+            console.log(`Server running on port ${port}`);
+        }
+    })
 })

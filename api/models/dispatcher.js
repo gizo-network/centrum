@@ -26,7 +26,7 @@ const dispatcherSchema = mongoose.Schema({
     active: {
         type: Boolean,
         required: true,
-        default: true,
+        default: false,
     },
     token: {
         type: String,
@@ -49,7 +49,7 @@ const Dispatcher = {
         }
     },
     async dispatcher(pub){
-        const dispatcher = await DispatcherModel.find({pub})
+        const dispatcher = await DispatcherModel.findOne({pub})
         return dispatcher
     },
     async dispatchers(){
