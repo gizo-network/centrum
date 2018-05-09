@@ -4,7 +4,8 @@ const {generateToken} = require("../../helpers/utils")
 const dispatcherSchema = mongoose.Schema({
     pub: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     ip: {
         type: String,
@@ -30,7 +31,8 @@ const dispatcherSchema = mongoose.Schema({
     },
     token: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     }
 })
 

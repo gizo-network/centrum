@@ -4,11 +4,11 @@ const jwt = require('jsonwebtoken')
 const Middlewares = {
     agent(req, res, next){
         try {
-            // if(req.headers["user-agent"] !== "Gizo Node"){
-            //     return res.status(400).send({
-            //         status: "Only gizo nodes allowed"
-            //     })
-            // }
+            if(req.headers["user-agent"] !== "Gizo Node"){
+                return res.status(400).send({
+                    status: "Only gizo nodes allowed"
+                })
+            }
             return next()
         } catch (error) {
             res.status(500).send({
