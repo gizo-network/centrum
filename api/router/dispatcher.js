@@ -68,7 +68,7 @@ router.post("/v1/dispatcher", Middlewares.agent, Middlewares.limitCreateDispatch
                 return res.status(400).json({status: "Public IP required"})
             }
             token = await Dispatcher.create({pub, ip, port})
-            agenda.now("verify node", {pub})
+            agenda.now("verify", {pub})
             return res.json({token})
         }
         return res.status(400).json({ status: "Incomplete Request" });
@@ -82,7 +82,6 @@ router.post("/v1/dispatcher", Middlewares.agent, Middlewares.limitCreateDispatch
 router.patch("/v1/dispatcher/connect", Middlewares.auth, async (req, res) => {
     try {
         await Dispatcher.incrWorkers(req.dispatcher)
-        agenda.every("10 minutes", "watch node")
         res.json({
             status: "success"
         })
