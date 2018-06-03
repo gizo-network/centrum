@@ -6,3 +6,4 @@ RUN yarn install
 
 CMD yarn run start
 
+EXPOSE 3000
