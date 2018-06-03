@@ -107,7 +107,8 @@ router.patch("/v1/dispatcher/disconnect", Middlewares.auth, async (req, res) => 
 
 router.patch("/v1/dispatcher/wake", Middlewares.auth, async (req, res) => {
     try {
-        await Dispatcher.wake(req.dispatcher)
+        const {ip, port} = req.body
+        await Dispatcher.wake(req.dispatcher, ip, port)
         res.json({
             status: "success"
         })
