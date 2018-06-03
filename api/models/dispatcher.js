@@ -68,7 +68,7 @@ const Dispatcher = {
         await DispatcherModel.findOneAndUpdate({pub}, {active: false})
     },
     async wake(pub, ip, port){
-        await DispatcherModel.findOneAndUpdate({pub}, {active: true, pub, ip})
+        await DispatcherModel.findOneAndUpdate({pub}, {active: true, ip, port})
     },
     async remove(pub) {
         await DispatcherModel.findOneAndRemove({pub})
