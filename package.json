@@ -21,7 +21,7 @@
   "dependencies": {
     "agenda": "^1.0.3",
     "apidoc": "^0.17.6",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "build-url": "^1.1.1",
